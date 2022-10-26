@@ -8,53 +8,58 @@ using System.Text;
 
 namespace BusinessLayer.Service
 {
-    public class UserBL : IUserBL
+    public class NoteBL:INoteBL
     {
-        private readonly IUserRL userRL;
-
-        public UserBL(IUserRL userRL)
+        INoteRL noteRL;
+        public NoteBL(INoteRL noteRL)
         {
-            this.userRL = userRL;
-        }
-        public UserEntity Registration(UserRegistrationModel userRegistrationModel)
-        {
-            try
-            {
-                return userRL.Registration(userRegistrationModel);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            this.noteRL = noteRL;
         }
 
-        public string Login(UserLogin userLogin)
+        public NoteEntity AddNote(NoteModel notes, long userid)
         {
             try
             {
-                return userRL.Login(userLogin);
+
+
+                return this.noteRL.AddNote(notes,userid);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+    
+        
+        public NoteEntity DeleteNote(long NoteId)
+        {
+            try
+            {
+                return noteRL.DeleteNote(NoteId);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        public string ForgetPassword(string Email)
+        public NoteEntity UpdateNote(NoteModel noteModel, long NoteId)
         {
             try
             {
-                return userRL.ForgetPassword(Email);
+                return noteRL.UpdateNote(noteModel, NoteId);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        public bool ResetLink(string email, string password, string confirmPassword)
+        public List<NoteEntity> GetNote(long NotesId)
         {
             try
             {
-                return userRL.ResetLink(email, password, confirmPassword);
+                return noteRL.GetNote(NotesId);
             }
             catch (Exception)
             {
