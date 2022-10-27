@@ -263,30 +263,7 @@ namespace FundooNote.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("Image")]
-        public IActionResult Imaged(long noteId, IFormFile image)
-        {
-            try
-            {
-                long userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
-                var result = noteBL.Imaged(noteId, userID, image);
-                if (result != null)
-                {
-                    return Ok(new { Status = true, Message = "Image Uploaded Successfully", Data = result });
-                }
-                else
-                {
-                    return BadRequest(new { Status = true, Message = "Image Uploaded Unsuccessfully", Data = result });
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-
+       
     }
 }
 

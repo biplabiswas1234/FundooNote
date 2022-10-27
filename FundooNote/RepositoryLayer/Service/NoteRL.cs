@@ -75,6 +75,66 @@ namespace RepositoryLayer.Service
             }
         }
 
+        public List<NoteEntity> GetNotebyUserId(long userId)
+        {
+            try
+            {
+                var Note = context.Note.Where(x => x.userid == userId).FirstOrDefault();
+                if (Note != null)
+                {
+                    return context.Note.Where(list => list.userid == userId).ToList();
+                }
+
+                return null;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        
+
+        public List<NoteEntity> GetNote(long NoteId)
+        {
+            try
+            {
+                var Note = context.Note.Where(x => x.NoteID == NoteId).FirstOrDefault();
+
+                if (Note != null)
+                {
+                    return context.Note.Where(list => list.NoteID == NoteId).ToList();
+                }
+
+                return null;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<NoteEntity> GetAllNote()
+        {
+            try
+            {
+                var Note = context.Note.FirstOrDefault();
+
+                if (Note != null)
+                {
+                    return context.Note.ToList();
+                }
+
+                return null;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public NoteEntity UpdateNote(NoteModel noteModel, long NoteId)
         {
             try
@@ -105,17 +165,15 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public List<NoteEntity> GetNote(long NoteId)
+        public bool Pinned(long NoteID, long userId)
         {
             try
             {
-                var Note = context.Note.Where(x => x.NoteID == NoteId).FirstOrDefault();
-                if (Note != null)
-                {
-                    return context.Note.Where(list => list.NoteID == NoteId).ToList();
-                }
+                var result = context.Note.Where(r => r.userid == userId && r.NoteID == NoteID).FirstOrDefault();
 
-                return null;
+                result.IsPin = !result.IsPin;
+                context.SaveChanges();
+                return result.IsPin;
 
             }
             catch (Exception)
@@ -123,5 +181,57 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public bool Trashed(long NoteID, long userId)
+        {
+            try
+            {
+                var result = context.Note.Where(r => r.userid == userId && r.NoteID == NoteID).FirstOrDefault();
+
+                result.IsTrash = !result.IsTrash;
+                context.SaveChanges();
+                return result.IsTrash;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool Archieved(long NoteID, long userId)
+        {
+            try
+            {
+                var result = context.Note.Where(r => r.userid == userId && r.NoteID == NoteID).FirstOrDefault();
+                result.IsArchive = !result.IsArchive;
+                context.SaveChanges();
+                return result.IsArchive;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public NoteEntity ColorNote(long NoteId, string color)
+        {
+            var result = context.Note.Where(r => r.NoteID == NoteId).FirstOrDefault();
+            if (result != null)
+            {
+               
+                    result.Color = color;
+                    context.Note.Update(result);
+                    context.SaveChanges();
+                    return result;
+               
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+       
+
     }
 }
