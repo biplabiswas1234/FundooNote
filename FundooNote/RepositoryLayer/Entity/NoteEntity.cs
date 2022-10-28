@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RepositoryLayer.Entity
 {
@@ -20,6 +21,7 @@ namespace RepositoryLayer.Entity
         public bool IsTrash { get; set; }
         [ForeignKey("UserTable")]
         public long userid { get; set; }
+        [JsonIgnore]
         public virtual UserEntity user { get; set; }
     }
 }

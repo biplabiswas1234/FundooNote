@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Http;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 using System;
@@ -44,6 +45,42 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        
+        public List<NoteEntity> GetNote(long NotesId)
+        {
+            try
+            {
+                return noteRL.GetNote(NotesId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public List<NoteEntity> GetNotebyUserId(long userId)
+        {
+            try
+            {
+                return noteRL.GetNotebyUserId(userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<NoteEntity> GetAllNote()
+        {
+            try
+            {
+                return noteRL.GetAllNote();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public NoteEntity UpdateNote(NoteModel noteModel, long NoteId)
         {
             try
@@ -55,11 +92,57 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public List<NoteEntity> GetNote(long NotesId)
+
+        public bool Pinned(long NoteID, long userId)
         {
             try
             {
-                return noteRL.GetNote(NotesId);
+                return noteRL.Pinned(NoteID, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool Trashed(long NoteID, long userId)
+        {
+            try
+            {
+                return noteRL.Trashed(NoteID, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool Archieved(long NoteID, long userId)
+        {
+            try
+            {
+                return noteRL.Archieved(NoteID, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public NoteEntity ColorNote(long NoteId, string color)
+        {
+            try
+            {
+                return noteRL.ColorNote(NoteId, color);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public string Imaged(long NoteID, long userId, IFormFile image)
+        {
+            try
+            {
+                return noteRL.Imaged(NoteID, userId, image);
             }
             catch (Exception)
             {
